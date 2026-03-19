@@ -11,12 +11,37 @@ resource "azurerm_monitor_data_collection_endpoint" "cowrie" {
   kind                = "Linux"
 }
 
+resource "azapi_resource" "cowrie_table" {
+  type      = "Microsoft.OperationalInsights/workspaces/tables@2022-10-01"
+  name      = "Cowrie_CL"
+  parent_id = azurerm_log_analytics_workspace.cowrie.id
+
+  body = {
+    properties = {
+      plan = "Analytics"
+      schema = {
+        name = "Cowrie_CL"
+        columns = [
+          { name = "TimeGenerated", type = "datetime" },
+          { name = "CowrieType", type = "string" },
+          { name = "eventid", type = "string" },
+          { name = "message", type = "string" },
+          { name = "src_ip", type = "string" },
+          { name = "username", type = "string" },
+          { name = "password", type = "string" }
+        ]
+      }
+      retentionInDays = 30
+    }
+  }
+}
+
 resource "azurerm_monitor_data_collection_rule" "cowrie" {
   resource_group_name         = azurerm_resource_group.cowrie.name
   location                    = var.location
   name                        = "${var.name}-dcr"
   data_collection_endpoint_id = azurerm_monitor_data_collection_endpoint.cowrie.id
-
+  depends_on                  = [azapi_resource.cowrie_table]
   destinations {
     log_analytics {
       name                  = "${var.name}-dest"
