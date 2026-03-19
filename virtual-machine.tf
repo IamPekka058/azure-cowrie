@@ -36,8 +36,8 @@ resource "azurerm_linux_virtual_machine" "cowrie" {
 }
 
 resource "time_sleep" "wait" {
-  depends_on = [azurerm_linux_virtual_machine.cowrie]
-  create_duration = "120s" 
+  depends_on      = [azurerm_linux_virtual_machine.cowrie]
+  create_duration = "120s"
 }
 
 resource "azurerm_virtual_machine_extension" "ama" {
@@ -47,5 +47,5 @@ resource "azurerm_virtual_machine_extension" "ama" {
   type                       = "AzureMonitorLinuxAgent"
   type_handler_version       = "1.25"
   auto_upgrade_minor_version = true
-  depends_on = [ time_sleep.wait ]
+  depends_on                 = [time_sleep.wait]
 }

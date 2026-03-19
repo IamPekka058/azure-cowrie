@@ -26,14 +26,14 @@ resource "azurerm_monitor_data_collection_rule" "cowrie" {
 
   stream_declaration {
     stream_name = "Custom-Cowrie_CL"
-    column { 
+    column {
       name = "timestamp"
-      type = "string" 
-      }
+      type = "string"
+    }
     column {
       name = "type"
-      type = "string" 
-      }
+      type = "string"
+    }
     column {
       name = "TimeGenerated"
       type = "datetime"
@@ -65,7 +65,7 @@ resource "azurerm_monitor_data_collection_rule" "cowrie" {
   }
 
   data_flow {
-    destinations = ["${var.name}-dest"]
+    destinations  = ["${var.name}-dest"]
     streams       = ["Custom-Cowrie_CL"]
     transform_kql = "source | extend TimeGenerated=todatetime(timestamp), CowrieType = tostring(type) | project TimeGenerated, CowrieType, eventid, src_ip, message, username, password"
     output_stream = "Custom-Cowrie_CL"
