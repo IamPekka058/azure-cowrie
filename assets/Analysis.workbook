@@ -1,0 +1,38 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Cowrie_CL\n| where isnotempty(src_ip)\n| extend geo = geo_info_from_ip_address(src_ip)\n| extend Latitude = todouble(geo.latitude),\n         Longitude = todouble(geo.longitude)\n| summarize Attempts = count() by Latitude, Longitude, Country = tostring(geo.country)\n| where isnotnull(Latitude) and isnotnull(Longitude)",
+        "size": 0,
+        "title": "Geolocation of requests",
+        "timeContext": {
+          "durationMs": 86400000
+        },
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "map",
+        "mapSettings": {
+          "locInfo": "LatLong",
+          "latitude": "Latitude",
+          "longitude": "Longitude",
+          "sizeSettings": "Latitude",
+          "sizeAggregation": "Sum",
+          "labelSettings": "Country",
+          "legendMetric": "Attempts",
+          "legendAggregation": "Sum",
+          "itemColorSettings": {
+            "nodeColorField": "Attempts",
+            "colorAggregation": "Sum",
+            "type": "heatmap",
+            "heatmapPalette": "greenRed"
+          }
+        }
+      },
+      "name": "query - 1"
+    }
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
