@@ -36,6 +36,9 @@ resource "azurerm_linux_virtual_machine" "cowrie" {
 }
 
 resource "time_sleep" "wait" {
+  triggers = {
+    vm_id = azurerm_linux_virtual_machine.cowrie.id
+  }
   depends_on      = [azurerm_linux_virtual_machine.cowrie]
   create_duration = "120s"
 }
