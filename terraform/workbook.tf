@@ -7,7 +7,7 @@ resource "azurerm_application_insights_workbook" "cowrie_dashboard" {
   source_id = lower(azurerm_log_analytics_workspace.cowrie.id)
   category  = "workbook"
 
-  data_json = file("${path.module}/assets/Analysis.workbook")
+  data_json = file("../assets/Analysis.workbook")
 
   tags = {
     Project = "Honeypot"

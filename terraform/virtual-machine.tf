@@ -25,7 +25,7 @@ resource "azurerm_linux_virtual_machine" "cowrie" {
 
   network_interface_ids = [azurerm_network_interface.cowrie.id]
 
-  custom_data = base64encode(templatefile("./assets/vm-setup.tpl", {
+  custom_data = base64encode(templatefile("../assets/vm-setup.tpl", {
     workspace_id  = azurerm_log_analytics_workspace.cowrie.id
     workspace_key = azurerm_log_analytics_workspace.cowrie.primary_shared_key
   }))
