@@ -5,9 +5,9 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "Cowrie_CL\n| where isnotempty(src_ip)\n| extend geo = geo_info_from_ip_address(src_ip)\n| extend Latitude = todouble(geo.latitude),\n         Longitude = todouble(geo.longitude)\n| summarize Attempts = count() by Latitude, Longitude, Country = tostring(geo.country)\n| where isnotnull(Latitude) and isnotnull(Longitude)",
+        "query": "Cowrie_CL\n| where isnotempty(src_ip)\n| where eventid matches regex(\"cowrie.login.*\")\n| extend geo = geo_info_from_ip_address(src_ip)\n| extend Latitude = todouble(geo.latitude),\n         Longitude = todouble(geo.longitude)\n| summarize Attempts = count() by Latitude, Longitude, Country = tostring(geo.country)\n| where isnotnull(Latitude) and isnotnull(Longitude)",
         "size": 0,
-        "title": "Geolocation of requests",
+        "title": "Geolocation of login requests",
         "timeContext": {
           "durationMs": 86400000
         },
@@ -18,7 +18,7 @@
           "locInfo": "LatLong",
           "latitude": "Latitude",
           "longitude": "Longitude",
-          "sizeSettings": "Latitude",
+          "sizeSettings": "Attempts",
           "sizeAggregation": "Sum",
           "labelSettings": "Country",
           "legendMetric": "Attempts",
