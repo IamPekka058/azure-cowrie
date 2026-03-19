@@ -1,5 +1,5 @@
 resource "azurerm_linux_virtual_machine" "cowrie" {
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.cowrie.name
   name                = "Cowrie-Host"
   location            = var.location
   size                = "Standard_B2ats_v2"

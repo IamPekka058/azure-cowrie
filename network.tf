@@ -1,7 +1,7 @@
 
-resource "azurerm_virtual_network" "vnet" {
-  resource_group_name = azurerm_resource_group.rg.name
-  name                = "Virtual-Network"
+resource "azurerm_virtual_network" "cowrie" {
+  resource_group_name = azurerm_resource_group.cowrie.name
+  name                = "${var.name}-vnet"
   location            = var.location
   address_space       = ["10.0.1.0/24"]
 }
@@ -9,7 +9,7 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_subnet" "cowrie" {
   resource_group_name  = azurerm_resource_group.cowrie.name
   name                 = "${var.name}-subnet"
-  virtual_network_name = azurerm_virtual_network.vnet.name
+  virtual_network_name = azurerm_virtual_network.cowrie.name
   address_prefixes     = ["10.0.1.0/25"]
 }
 
