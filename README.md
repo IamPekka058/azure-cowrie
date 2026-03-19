@@ -1,5 +1,7 @@
 # Azure Cowrie Deployment with Terraform
 
+![Azure Cowrie Honeypot](assets/dashboard_view.png)
+
 ## 🚀 Key Features
 
 - **Infrastructure-as-Code**: Entirely provisioned via Terraform for repeatable deployments.
